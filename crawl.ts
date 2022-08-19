@@ -2,6 +2,8 @@ const scheduler = require('node-schedule');
 const cheerio = require('cheerio');
 const request = require('request');
 
+const kakaoTalk = require('./kakaoTalk');
+
 function restock(productId: number, size: string) {
    const schedule = scheduler.scheduleJob('*/2 * * * * *', () => {
       const url = 'https://store.musinsa.com/app/goods/' + productId;
@@ -14,7 +16,9 @@ function restock(productId: number, size: string) {
 
          const map = new Map();
          console.log(productName);
-         for (let i = 1; i < option.length; i++) {
+
+         const optionLength = option.length;
+         for (let i = 1; i < optionLength; i++) {
             map.set(option[i].attribs.value, option[i].attribs.jaego_yn);
          }
 
@@ -24,6 +28,7 @@ function restock(productId: number, size: string) {
          if (map.get(size) === 'Y') {
             const msg = `${productName} ${size} 재고있음`;
             console.log(msg);
+            kakaoTalk.sendMessage(msg);
             schedule.cancel();
          }
       });

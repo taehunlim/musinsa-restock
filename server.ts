@@ -33,6 +33,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 crawl.restock(2675860, '02(30~31inch)');
+crawl.restock(2702542, 'XL');
 
 // global error
 app.use(errorHandler);
