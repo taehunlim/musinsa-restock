@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser');
 
 const errorHandler = require('./_middleware/error-handler');
 
+const crawl = require('./crawl');
+
 app.use(cookieParser());
 
 app.use(express.json());
@@ -29,6 +31,8 @@ if (process.env.NODE_ENV === 'development') {
       }),
    );
 }
+
+crawl.restock(2675860, '02(30~31inch)');
 
 // global error
 app.use(errorHandler);
